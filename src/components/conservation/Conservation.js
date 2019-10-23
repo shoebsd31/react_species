@@ -6,8 +6,10 @@ const ConservationPage = (props) => {
 
   const { speciesName } = props.match.params;
   const [measures, setMeasures] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getConservationMeasures(speciesName).then((_measures) => {
+        setLoading(false);
         var titles=Object.keys(_measures.result).map(function(k){return _measures.result[k].title}).join(", ");
         setMeasures(titles)});
   }, []);
@@ -18,7 +20,8 @@ const ConservationPage = (props) => {
     <br></br>
     <hr></hr>
     <div>
-    <h2>{measures}</h2>
+    
+    {loading? <div>loading....</div>:<h2>{measures}</h2> }
     </div>
   </div>
 )
